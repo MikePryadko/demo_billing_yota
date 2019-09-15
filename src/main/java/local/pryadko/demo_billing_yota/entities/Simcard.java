@@ -1,26 +1,38 @@
 package local.pryadko.demo_billing_yota.entities;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
-@Table(name = "simcards")
-public class Simcard extends BaseEntity {
-    @Column(nullable = false)
+@Table(name = "simcards") //, indexes = @Index(name = "simcard_sn_idx", columnList = "serialNumber", unique = true))
+public class Simcard {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true)
     private Long serialNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long phoneNumber;
 
     @Column(nullable = false)
-    private Boolean enabled;
+    private Boolean enabled = true;
 
-    private List<VoicePack> voicePacks;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "simcard_id")
+    private List<VoicePack> voicePacks = new ArrayList<>();
 
-    private List<TrafficPack> trafficPacks;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "simcard_id")
+    private List<TrafficPack> trafficPacks = new ArrayList<>();
+
+
+    public Simcard(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
