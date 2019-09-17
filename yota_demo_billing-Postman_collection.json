@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "c72980ac-adf6-42d0-a027-efe420ec978c",
+		"name": "yota_demo_billing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/customer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/customer?firstName=Vasya&lastName=Pupkin",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Vasya"
+								},
+								{
+									"key": "lastName",
+									"value": "Pupkin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create simcard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/customer/simcard?customerId=1&phoneNumber=79500344514",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"simcard"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "1"
+								},
+								{
+									"key": "phoneNumber",
+									"value": "79500344514"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Block simcard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/customer/simcard/:simSN/block",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"simcard",
+								":simSN",
+								"block"
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock simcard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/customer/simcard/:simSN/unblock",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer",
+								"simcard",
+								":simSN",
+								"unblock"
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "producer",
+			"item": [
+				{
+					"name": "Add voice pack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/voice/:simSN?minutes=10&expired=1568735994066",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"voice",
+								":simSN"
+							],
+							"query": [
+								{
+									"key": "minutes",
+									"value": "10"
+								},
+								{
+									"key": "expired",
+									"value": "1568735994066"
+								}
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add traffic pack",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/traffic/:simSN?megabytes=500&expired=1570709113000",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"traffic",
+								":simSN"
+							],
+							"query": [
+								{
+									"key": "megabytes",
+									"value": "500"
+								},
+								{
+									"key": "expired",
+									"value": "1570709113000"
+								}
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "consumer",
+			"item": [
+				{
+					"name": "Write off minutes (voice packs)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/voice/:simSN?minutes=100",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"voice",
+								":simSN"
+							],
+							"query": [
+								{
+									"key": "minutes",
+									"value": "100"
+								}
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Write off megabytes (traffic packs)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/traffic/:simSN?megabytes=500",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"traffic",
+								":simSN"
+							],
+							"query": [
+								{
+									"key": "megabytes",
+									"value": "500"
+								}
+							],
+							"variable": [
+								{
+									"key": "simSN",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

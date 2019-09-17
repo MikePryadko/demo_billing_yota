@@ -6,15 +6,11 @@ import local.pryadko.demo_billing_yota.exceptions.BadRequestException;
 import local.pryadko.demo_billing_yota.exceptions.ConflictException;
 import local.pryadko.demo_billing_yota.exceptions.NotFoundException;
 import local.pryadko.demo_billing_yota.repository.CustomerRepository;
+import local.pryadko.demo_billing_yota.repository.SimcardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import javax.management.StandardEmitterMBean;
-import java.util.HashMap;
-import java.util.List;
 
 
 @RestController
@@ -23,6 +19,9 @@ public class CustomerController {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private SimcardRepository simcardRepository;
 
 
     @GetMapping
@@ -56,5 +55,23 @@ public class CustomerController {
         } catch (DataIntegrityViolationException e) {
             throw new ConflictException("Simcard with number +" + phoneNumber + " already exists");
         }
+    }
+
+    @PostMapping("simcard/{simSN}/block")
+    public void blockSimcard(@PathVariable long simSN) {
+        Simcard sc = simcardRepository.getSimcardBySerialNumber(simSN);
+        if (sc == null)
+            throw new NotFoundException("Simcard with SN " + simSN + " not exists");
+        sc.setEnabled(false);
+        simcardRepository.save(sc);
+    }
+
+    @PostMapping("simcard/{simSN}/unblock")
+    public void unblockSimcard(@PathVariable long simSN) {
+        Simcard sc = simcardRepository.getSimcardBySerialNumber(simSN);
+        if (sc == null)
+            throw new NotFoundException("Simcard with SN " + simSN + " not exists");
+        sc.setEnabled(true);
+        simcardRepository.save(sc);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "simcards") //, indexes = @Index(name = "simcard_sn_idx", columnList = "serialNumber", unique = true))
+@Table(name = "simcards")
 public class Simcard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +24,16 @@ public class Simcard {
     private Boolean enabled = true;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "simcard_id")
+    @JoinColumn(name = "simcard_sn")
     private List<VoicePack> voicePacks = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "simcard_id")
+    @JoinColumn(name = "simcard_sn")
     private List<TrafficPack> trafficPacks = new ArrayList<>();
 
 
     public Simcard(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }
