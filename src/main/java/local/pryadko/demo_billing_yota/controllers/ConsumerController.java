@@ -10,6 +10,7 @@ import local.pryadko.demo_billing_yota.services.SimcardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,7 @@ public class ConsumerController {
     @Autowired
     private SimcardService simcardService;
 
+    @Transactional
     @DeleteMapping("/voice/{simSN}")
     public void writeOffVoice(@PathVariable long simSN, @RequestParam int minutes) {
         Simcard sc = simcardRepository.getBySnWithVoice(simSN);
@@ -51,6 +53,7 @@ public class ConsumerController {
             throw new NotAcceptableException("Not enough voice packs");
     }
 
+    @Transactional
     @DeleteMapping("/traffic/{simSN}")
     public void writeOffTraffic(@PathVariable long simSN, @RequestParam int megabytes) {
         Simcard sc = simcardRepository.getBySnWithTraffic(simSN);

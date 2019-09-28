@@ -12,6 +12,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
 
 @RestController
 @RequestMapping("/customer")
@@ -44,6 +46,7 @@ public class CustomerController {
         }
     }
 
+    @Transactional
     @PostMapping("/simcard")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSimcard(@RequestParam long customerId, @RequestParam long phoneNumber) {
@@ -57,6 +60,7 @@ public class CustomerController {
         }
     }
 
+    @Transactional
     @PostMapping("simcard/{simSN}/block")
     public void blockSimcard(@PathVariable long simSN) {
         Simcard sc = simcardRepository.getSimcardBySerialNumber(simSN);
@@ -66,6 +70,7 @@ public class CustomerController {
         simcardRepository.save(sc);
     }
 
+    @Transactional
     @PostMapping("simcard/{simSN}/unblock")
     public void unblockSimcard(@PathVariable long simSN) {
         Simcard sc = simcardRepository.getSimcardBySerialNumber(simSN);

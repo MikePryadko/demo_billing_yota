@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
+
 
 @RestController
 public class ProducerController {
@@ -23,6 +25,7 @@ public class ProducerController {
     @Autowired
     private SimcardService simcardService;
 
+    @Transactional
     @PostMapping("/voice/{simSN}")
     public void addVoice(@PathVariable long simSN, @RequestParam int minutes, @RequestParam long expired) {
         if (minutes < 1)
@@ -39,6 +42,7 @@ public class ProducerController {
         simcardRepository.save(sc);
     }
 
+    @Transactional
     @PostMapping("/traffic/{simSN}")
     public void addTraffic(@PathVariable long simSN, @RequestParam int megabytes, @RequestParam long expired) {
         if (megabytes < 1)
